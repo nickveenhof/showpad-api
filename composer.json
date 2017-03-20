@@ -1,8 +1,8 @@
 {
-    "name": "turanct/showpad-api",
+    "name": "nickveenhof/showpad-api",
     "description": "Wrapper for the Showpad API",
     "type": "library",
-    "homepage": "https://github.com/turanct/showpad-api",
+    "homepage": "https://github.com/nickveenhof/showpad-api",
     "license": "MIT",
     "authors": [
         {
