@@ -1,12 +1,6 @@
 <?php
 /**
- * This file is part of the turanct/showpad-api library
- *
- * @category Library
- * @package  Showpad
- * @author   Toon Daelman <toon@sumocoders.be>
- * @license  MIT http://opensource.org/licenses/MIT
- * @link     http://www.sumocoders.be
+ * This file was inherited and adapted from the turanct/showpad-api library
  */
 
 namespace Showpad;
@@ -14,12 +8,22 @@ namespace Showpad;
 /**
  * Basic Configuration
  */
-class ConfigBasic implements ConfigInterface
+class Config implements ConfigInterface
 {
     /**
      * @var string The client id
      */
     protected $clientId;
+
+    /**
+     * @var string The username
+     */
+    protected $username;
+
+    /**
+     * @var string The password
+     */
+    protected $password;
 
     /**
      * @var string The client secret
@@ -50,9 +54,11 @@ class ConfigBasic implements ConfigInterface
      * @param string $accessToken  The access token
      * @param string $refreshToken The refresh token
      */
-    public function __construct($endpoint, $clientId, $clientSecret, $accessToken = null, $refreshToken = null)
+    public function __construct($endpoint, $username, $password, $clientId, $clientSecret, $accessToken = null, $refreshToken = null)
     {
         $this->endpoint = (string) $endpoint;
+        $this->username = (string) $username;
+        $this->password = (string) $password;
         $this->clientId = (string) $clientId;
         $this->clientSecret = (string) $clientSecret;
         $this->accessToken = (string) $accessToken;
@@ -81,6 +87,26 @@ class ConfigBasic implements ConfigInterface
     public function setRefreshToken($refreshToken)
     {
         $this->refreshToken = (string) $refreshToken;
+    }
+
+    /**
+     * Get client id
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Get client id
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**

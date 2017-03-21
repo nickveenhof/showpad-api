@@ -1,6 +1,6 @@
 {
     "name": "nickveenhof/showpad-api",
-    "description": "Wrapper for the Showpad API",
+    "description": "Wrapper for the Showpad API. Derived from turanct/showpad-api",
     "type": "library",
     "homepage": "https://github.com/nickveenhof/showpad-api",
     "license": "MIT",
@@ -12,6 +12,9 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.1"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {

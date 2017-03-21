@@ -1,12 +1,6 @@
 <?php
 /**
- * This file is part of the turanct/showpad-api library
- *
- * @category Library
- * @package  Showpad
- * @author   Toon Daelman <toon@sumocoders.be>
- * @license  MIT http://opensource.org/licenses/MIT
- * @link     http://www.sumocoders.be
+ * This file was inherited and adapted from the turanct/showpad-api library
  */
 
 namespace Showpad;
@@ -33,6 +27,20 @@ interface ConfigInterface
      * @return void
      */
     public function setRefreshToken($refreshToken);
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername();
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword();
 
     /**
      * Get client id
