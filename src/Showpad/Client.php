@@ -134,10 +134,10 @@ class Client
         $resource = '/assets/' . $id . '/tags.json';
 
         $parameters = array(
-          'form_params' => array(
-            'name' => $tag,
-            'externalId' => $uuid,
-          )
+            'form_params' => array(
+              'name' => $tag,
+              'externalId' => $uuid,
+            )
         );
 
         // Create request
@@ -243,19 +243,19 @@ class Client
      */
     public function tagAdd($name)
     {
-      $parameters = array(
-        'form_params' => array(
-          'name' => $name,
-        )
-      );
+        $parameters = array(
+            'form_params' => array(
+              'name' => $name,
+            )
+        );
 
-      $response = $this->auth->request(
-          'POST',
-          '/tags.json',
-          $parameters
-      );
+        $response = $this->auth->request(
+            'POST',
+            '/tags.json',
+            $parameters
+        );
 
-      return $response;
+        return $response;
     }
 
     /**
