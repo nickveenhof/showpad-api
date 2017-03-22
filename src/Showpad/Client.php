@@ -50,10 +50,11 @@ class Client
      * POST /assets.json
      *
      * @param string $file The path to the file
+     * @param string $uuid The UUID of the file as used in the source application
      *
      * @return array
      */
-    public function assetsAdd($file)
+    public function assetsAdd($file, $uuid = '')
     {
         $resource = '/assets.json';
 
@@ -62,6 +63,10 @@ class Client
                 [
                     'name'     => 'file',
                     'contents' => fopen($file, 'r')
+                ],
+                [
+                    'name'     => 'externalId',
+                    'contents' => $uuid
                 ]
             ]
         );
@@ -124,12 +129,15 @@ class Client
      *
      * @return array
      */
-    public function assetsTagsAdd($id, $tag)
+    public function assetsTagsAdd($id, $tag, $uuid = '')
     {
         $resource = '/assets/' . $id . '/tags.json';
 
         $parameters = array(
+          'form_params' => array(
             'name' => $tag,
+            'externalId' => $uuid,
+          )
         );
 
         // Create request
@@ -156,16 +164,8 @@ class Client
     {
         $resource = '/assets/' . $id . '/tags/' . $tag . '.json';
 
-        $parameters = array(
-            'query' => array('method' => 'link'),
-        );
-
         // Create request
-        $data = $this->auth->request(
-            'GET',
-            $resource,
-            $parameters
-        );
+        $data = $this->auth->request('LINK', $resource);
 
         return $data;
     }
@@ -183,11 +183,8 @@ class Client
     public function assetsTagsRemoveById($id, $tag)
     {
         return $this->auth->request(
-            'GET',
-            '/assets/' . $id . '/tags/' . $tag . '.json',
-            array(
-                'query' => array('method' => 'unlink'),
-            )
+            'UNLINK',
+            '/assets/' . $id . '/tags/' . $tag . '.json'
         );
     }
 
@@ -246,30 +243,19 @@ class Client
      */
     public function tagAdd($name)
     {
-        return $this->auth->request(
-            'POST',
-            '/tags.json',
-            array('name' => $name)
-        );
-    }
+      $parameters = array(
+        'form_params' => array(
+          'name' => $name,
+        )
+      );
 
-    /**
-     * Get a ticket by id
-     *
-     * GET /tickets/{id}.json
-     *
-     * @param string $id The ticket id
-     *
-     * @return array
-     */
-    public function ticketsGet($id)
-    {
-        $resource = '/tickets/' . $id . '.json';
+      $response = $this->auth->request(
+          'POST',
+          '/tags.json',
+          $parameters
+      );
 
-        // Create request
-        $data = $this->auth->request('GET', $resource);
-
-        return $data;
+      return $response;
     }
 
     /**
@@ -288,47 +274,6 @@ class Client
             'GET',
             '/tags/' . $tagId . '/assets.json',
             array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
-        );
-    }
-
-    /**
-     * Get a list of existing channels
-     *
-     * @note: this works only with API v3
-     *
-     * GET /channels.json
-     *
-     * @param int $limit  The max number of items we want to retrieve
-     * @param int $offset The number of items to skip from the top of the list
-     *
-     * @return array
-     */
-    public function channelsList($limit = 25, $offset = 0)
-    {
-        return $this->auth->request(
-            'GET',
-            '/channels.json',
-            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
-        );
-    }
-
-    /**
-     * Add a channel
-     *
-     * @note: this works only with API v3
-     *
-     * POST /channels.json
-     *
-     * @param string $name The channel name
-     *
-     * @return array
-     */
-    public function channelAdd($name)
-    {
-        return $this->auth->request(
-            'POST',
-            '/channels.json',
-            array('name' => $name)
         );
     }
 }

@@ -1,7 +1,4 @@
 <?php
-/**
- * This file was inherited and adapted from the turanct/showpad-api library
- */
 
 namespace Showpad;
 
@@ -86,7 +83,14 @@ class Authentication
         $headers = array('Authorization' => 'Bearer ' . $this->config->getAccessToken());
 
         $parameters['headers'] = $headers;
-        $response = $this->httpClient->request($method, $resource, $parameters);
+        try {
+          $response = $this->httpClient->request($method, $resource, $parameters);
+        }
+        catch (RequestException $e) {
+          // Debugging purposes
+          //var_dump($e->getResponse()->getBody()->getContents());
+        }
+
 
         $data = json_decode($response->getBody(), true);
 
